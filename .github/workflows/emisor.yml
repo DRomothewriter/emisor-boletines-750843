@@ -110,6 +110,10 @@ jobs:
             docker stop emisor 2>/dev/null || true
             docker rm emisor 2>/dev/null || true
             docker run -d --name emisor -p 8080:8080 --restart unless-stopped \
+              --log-driver=awslogs \
+              --log-opt awslogs-region=us-east-1 \
+              --log-opt awslogs-group=/boletines/emisor \
+              --log-opt awslogs-create-group=true \
               -e AWS_REGION=us-east-1 \
               -e AWS_ACCESS_KEY="$APP_AWS_ACCESS_KEY" \
               -e AWS_SECRET_KEY="$APP_AWS_SECRET_KEY" \
